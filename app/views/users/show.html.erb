@@ -1,0 +1,15 @@
+<% provide(:title, @user.name) %>
+
+<div class="row">
+  <aside class="col-md-4">
+  <%# asideタグはサイドバーなどの補完コンテンツの表示に使われるが単独で表示することもできる。
+  rowとcol-md-4クラスはBootstrapの一部 %>
+    <section class="user_info">
+      <h1>
+        <%= gravatar_for @user %>
+        <%# gravatar_forヘルパーメソッドでGravatarの画像を利用できるようにする %>
+        <%= @user.name %>
+      </h1>
+    </section>
+  </aside>
+</div>

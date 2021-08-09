@@ -1,3 +1,33 @@
 <% provide(:title, 'Sign up') %>
 <h1>Sign up</h1>
+<%# form_forヘルパーメソッドを使います。このメソッドはActive Recordのオブジェクトを取り込み、そのオブジェクトの属性を使ってフォームを構築します。 %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+      <%= form_for(@user) do |f| %>
+  <%# doキーワードは、 form_forが1つの変数を持つブロックを取ることを表します。この変数fは “form” のfです。 %>
+      <%# fオブジェクトは、HTMLフォーム要素に対応するメソッドが呼び出されると、@userの属性を設定するために特別に設計れされたHTMLを返す。 %>
+        <%= render 'shared/error_messages'%>
+
+        <%# Rails全般の慣習として、複数のビューで使われるパーシャルは専用のディレクトリ「shared」によく置かれます %> 
+
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+
+        <%# Userモデルのname属性を設定する、ラベル付きテキストフィールド要素を作成するのに必要なHTML要素を作成 %>
+
+        <%# ユーザーのnewページでエラーメッセージのパーシャル (partial) を出力します。このとき、form-controlというCSSクラスも一緒に追加することで、Bootstrapがうまく取り扱ってくれるようになります。 %>
+
+        <%= f.label :email %>
+        <%= f.email_field :email, class: 'form-control' %>
+
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control' %>
+        
+        <%= f.label :password_confirmation, "Confirmation" %>
+        <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+        <%= f.submit "Create my account", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
 <p>This will be a signup page for new users.</p>

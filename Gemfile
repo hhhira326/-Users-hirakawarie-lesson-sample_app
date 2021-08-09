@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+gem 'pry-rails'
 #gemファイルを更新したら必ずbundle installを実行する
 ruby '2.5.8'
 gem "bcrypt", "3.1.12"
