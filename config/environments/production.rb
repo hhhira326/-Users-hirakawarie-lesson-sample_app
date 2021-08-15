@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.force_ssl = true
-  #SSLの設定
+  #SSLの設定(本番環境ではSSLを使うようにする)
   # Code is not reloaded between requests.
   config.cache_classes = true
 

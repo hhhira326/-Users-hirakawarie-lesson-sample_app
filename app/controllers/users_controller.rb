@@ -19,6 +19,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      log_in @user
+      #ユーザー登録中にログインを済ませる
       flash[:success] = "Welcome to the Sample App"
       #flashという変数は、ハッシュのように扱い、:successというキーに成功時のメッセージを代入
       #リダイレクトした直後のページで表示できるようになる

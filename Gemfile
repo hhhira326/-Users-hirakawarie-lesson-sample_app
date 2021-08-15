@@ -5,6 +5,7 @@ gem 'pry-rails'
 #gemファイルを更新したら必ずbundle installを実行する
 ruby '2.5.8'
 gem "bcrypt", "3.1.12"
+gem 'jquery-rails','4.3.1'
 gem "bootstrap-sass","3.3.7"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.6'
