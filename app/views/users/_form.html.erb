@@ -1,0 +1,29 @@
+<%# form_forヘルパーメソッドを使います。このメソッドはActive Recordのオブジェクトを取り込み、そのオブジェクトの属性を使ってフォームを構築します。 %>
+  <%= form_for(@user, url: yield(:url)) do |f| %>
+<%# doキーワードは、 form_forが1つの変数を持つブロックを取ることを表します。この変数fは “form” のfです。 %>
+  <%# fオブジェクトは、HTMLフォーム要素に対応するメソッドが呼び出されると、@userの属性を設定するために特別に設計されたHTMLを返す。 %>
+  <%# @userを使うとeditアクションの時は元からフィールドに名前やメールアドレスなどの情報が入力される %>
+    <%= render 'shared/error_messages', object: @user %>
+      <%# error_messagesパーシャルを再利用 %>
+
+    <%# Rails全般の慣習として、複数のビューで使われるパーシャルは専用のディレクトリ「shared」によく置かれます %> 
+
+
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control' %>
+
+    <%# Userモデルのname属性を設定する、ラベル付きテキストフィールド要素を作成するのに必要なHTML要素を作成 %>
+
+    <%# ユーザーのnewページでエラーメッセージのパーシャル (partial) を出力します。このとき、form-controlというCSSクラスも一緒に追加することで、Bootstrapがうまく取り扱ってくれるようになります。 %>
+
+    <%= f.label :email %>
+    <%= f.email_field :email, class: 'form-control' %>
+
+    <%= f.label :password %>
+    <%= f.password_field :password, class: 'form-control' %>
+    
+    <%= f.label :password_confirmation, "Confirmation" %>
+    <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+    <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+<% end %>

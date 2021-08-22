@@ -3,7 +3,7 @@ module SessionsHelper
 #渡されたユーザーでログインする
   def log_in(user)
     session[:user_id] = user.id
-    #ユーザーのブラウザ内の一時cookiesに暗号化済みのユーザーIDが自動で作成されます。
+    #ユーザーのブラウザ内の一時cookiesに暗号化済みのユーザーIDが自動で作成される。
   end
 
   #ユーザーのセッションを永続的にする
@@ -11,6 +11,11 @@ module SessionsHelper
     user.remember
     cookies.permanent.signed[:user_id] = user.id
     cookies.permanent[:remember_token] = user.remember_token
+  end
+
+  #渡されたユーザーがログイン済みユーザーであればtrueを返す
+  def current_user?(user)
+    user == current_user
   end
 
   #現在ログイン中のユーザーを返す(いる場合)
@@ -50,5 +55,19 @@ module SessionsHelper
     forget(current_user)
     session.delete(:user_id)
     @current_user = nil
+  end
+
+  #記録したURL(もしくはデフォルト値)にリダイレクト
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding_url] || default)
+    session.delete(:forwarding_url)
+    #deleteしておかないと次回も保護されたページに転送されてしまいブラウザを閉じるまで繰り返されてしまう
+  end
+
+  #アクセスしようとしたURLを覚えておく
+  def store_location
+    session[:forwarding_url] = request.original_url if request.get?
+    #request.original_urlでリクエスト先が取得できます
+    #getリクエストが送られたときだけurlを格納するようにifの条件文を使う。
   end
 end

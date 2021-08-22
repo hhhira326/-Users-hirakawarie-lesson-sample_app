@@ -20,7 +20,8 @@ class User < ApplicationRecord
   #セキュアにハッシュ化してパスワードを、db内のpassword_digestという属性に保存できるようになり、これがmodel内に含まれていることがメソッドを使える条件
   # 2つのペアの仮想的な属性 (passwordとpassword_confirmation) が使えるようになる。また、存在性と値が一致するかどうかのバリデーションも追加される18 。
   # authenticateメソッドが使えるようになる (引数の文字列(パスワード)がハッシュ化した値と、DB内にあるpassword_digestカラムの値を比較する。パスワードと一致するとUserオブジェクトを、間違っているとfalseを返すメソッド) 
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  
 
   class << self
     #User.digest → self.digest → digestにできる。selfはUser「クラス」を指す

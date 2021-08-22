@@ -1,19 +1,21 @@
 class UsersController < ApplicationController
-  
+  before_action :logged_in_user, only: [:edit, :update, :index, :destroy]
+  before_action :correct_user, only: [:edit, :update]
+  before_action :admin_user, only: :destroy
+  #何らかの処理が実行される直前に特定のメソッドを実行する仕組み。
+
+  def index
+    @users = User.paginate(page: params[:page])
+    #ここで:pageパラメーターにはparams[:page]が使われていますが、これはwill_paginateによって自動的に生成されます。
+  end
+
   def show
     @user = User.find(params[:id])
     #params[:id]は文字列型の "1" ですが、findメソッドでは自動的に整数型に変換されます
-    
-    
-    #debugger
-    #ブラウザから /users/1 にアクセスし、Railsサーバーを立ち上げたターミナルを見るとbyebugプロンプトが表示されている。このプロンプトではRailsコンソールのようにコマンドを呼び出すことができて、アプリケーションのdebuggerが呼び出された瞬間の状態を確認することができます。
-    #トラブルが起こっていそうなコードの近くにdebuggerを差し込んでシステムの状態を調べてみる
-
-
   end
+
   def new
     @user = User.new
-    
   end
 
   def create
@@ -32,10 +34,51 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params) #更新に成功した場合
+      flash[:success] = "Profile updated"
+      redirect_to @user
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "User deleted"
+    redirect_to users_url
+  end
+
   private
+
+  #管理者かどうか確認
+    def admin_user
+      redirect_to(root_url) unless current_user.admin?
+    end  
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
                                   :password_confirmation)
     end
+
+    #ログイン済みユーザーかどうか確認
+    def logged_in_user
+      unless logged_in?
+        store_location
+        flash[:danger] = "Please log in"
+        redirect_to login_url
+      end
+    end
+
+    #正しいユーザーかどうか確認
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless current_user?(@user)
+    end
+
 end
