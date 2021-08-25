@@ -3,7 +3,7 @@
 <%# doキーワードは、 form_forが1つの変数を持つブロックを取ることを表します。この変数fは “form” のfです。 %>
   <%# fオブジェクトは、HTMLフォーム要素に対応するメソッドが呼び出されると、@userの属性を設定するために特別に設計されたHTMLを返す。 %>
   <%# @userを使うとeditアクションの時は元からフィールドに名前やメールアドレスなどの情報が入力される %>
-    <%= render 'shared/error_messages', object: @user %>
+    <%= render 'shared/error_messages', object: f.object %>
       <%# error_messagesパーシャルを再利用 %>
 
     <%# Rails全般の慣習として、複数のビューで使われるパーシャルは専用のディレクトリ「shared」によく置かれます %> 

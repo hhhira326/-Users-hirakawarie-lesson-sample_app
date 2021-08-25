@@ -14,3 +14,10 @@ User.create!(name: "Example User", email: "example@railstutorial.org", password:
   password = "password"
   User.create!(name: name, email: email, password: password, password_confirmation: password)
 end
+
+#サンプルデータにマイクロポストを追加する
+users = User.order(:created_at).take(6) #初めの6人
+50.times do
+  content = Faker::Lorem.sentence(5)
+  users.each { |user| user.microposts.create!(content: content) }
+end

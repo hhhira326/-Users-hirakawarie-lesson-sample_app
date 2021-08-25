@@ -1,14 +1,13 @@
 
-<% if @user.errors.any?%>
+<% if object.errors.any?%>
 <%# エラーが一つでもあるかどうか %>
 
   <div id="error_explanation">
     <div class="alert alert-danger">
-      The form contains <%= pluralize(@user.errors.count, "error") %>.
-      <%# pluralizeは英語専用のテキストヘルパーで最初の引数に整数が与えられると、それに基づき２番目の引数の英単語を複数形(不規則活用を含む)に変更したものを返す。 %>
+      The form contains <%= pluralize(object.errors.count, "error") %>.
     </div>
     <ul>
-    <% @user.errors.full_messages.each do |msg| %>
+    <% object.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>

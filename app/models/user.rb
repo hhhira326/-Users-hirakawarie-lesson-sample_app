@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :microposts, dependent: :destroy
+  #マイクロポストはその所有者(ユーザー)と一緒に破棄されることを保証する
   attr_accessor :remember_token
   before_save {self.email = email.downcase} 
   #dbに保存する前に小文字に変換する before_saveコールバックメソッド
@@ -22,6 +24,11 @@ class User < ApplicationRecord
   # authenticateメソッドが使えるようになる (引数の文字列(パスワード)がハッシュ化した値と、DB内にあるpassword_digestカラムの値を比較する。パスワードと一致するとUserオブジェクトを、間違っているとfalseを返すメソッド) 
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   
+  #試作feedの定義
+  #完全な実装は14章
+  def feed
+    Micropost.where("user_id = ?",id)
+  end
 
   class << self
     #User.digest → self.digest → digestにできる。selfはUser「クラス」を指す

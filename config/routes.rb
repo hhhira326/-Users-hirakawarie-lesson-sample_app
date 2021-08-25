@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   resources :users
   #ユーザー情報を表示するURL (/users/1) を追加するためだけのものではなく、ユーザーのURLを生成するための多数の名前付きルートと共に、RESTfulなUsersリソースで必要となるすべてのアクションが利用できるようになる。
+  resources :microposts, only: [:create, :destroy]
 end
