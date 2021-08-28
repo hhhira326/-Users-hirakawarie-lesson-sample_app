@@ -12,7 +12,7 @@ User.create!(name: "Example User", email: "example@railstutorial.org", password:
   name = Faker::Name.name
   email = "example-#{n+1}@railstutorial.org"
   password = "password"
-  User.create!(name: name, email: email, password: password, password_confirmation: password)
+  User.create!(name: name, email: email, password: password, password_confirmation: password,)
 end
 
 #サンプルデータにマイクロポストを追加する
@@ -21,3 +21,13 @@ users = User.order(:created_at).take(6) #初めの6人
   content = Faker::Lorem.sentence(5)
   users.each { |user| user.microposts.create!(content: content) }
 end
+
+#リレーションシップ
+users = User.all
+user = users.first
+following = users[2..50]
+#ユーザー３から５１までを最初のユーザーがフォローする
+followers = users[3..40]
+#最初のユーザーをユーザー４から４１までがフォローする
+following.each { |followed| user.follow(followed) }
+followers.each { |follower| follower.follow(user) }

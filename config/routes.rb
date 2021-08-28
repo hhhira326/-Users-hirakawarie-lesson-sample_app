@@ -7,7 +7,12 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
-  resources :users
-  #ユーザー情報を表示するURL (/users/1) を追加するためだけのものではなく、ユーザーのURLを生成するための多数の名前付きルートと共に、RESTfulなUsersリソースで必要となるすべてのアクションが利用できるようになる。
+
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :microposts, only: [:create, :destroy]
+  resources :relationships, only:[:create, :destroy]
 end
